@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Hugo 0.72.0" />
+
+
+<title>R lessons and assignments - Assignments for Statistics with R</title>
+<meta property="og:title" content="R lessons and assignments - Assignments for Statistics with R">
+
+
+
+
+  
+
+
+
+
+
+
+
+
+<link href='//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css' rel='stylesheet' type='text/css' />
+
+
+
+<link rel="stylesheet" href="/css/fonts.css" media="all">
+<link rel="stylesheet" href="/css/main.css" media="all">
+
+
+
+  </head>
+  <body>
+    <div class="wrapper">
+      <header class="header">
+        <nav class="nav">
+  <a href="/" class="nav-logo">
+    <img src="/images/logo.png"
+         width="50"
+         height="50"
+         alt="Logo">
+  </a>
+
+  <ul class="nav-links">
+    
+    <li><a href="/about/">About</a></li>
+    
+  </ul>
+</nav>
+
+      </header>
+
+
+<main class="content" role="main">
+
+  <article class="article">
+    
+    <span class="article-duration">16 min read</span>
+    
+
+    <h1 class="article-title">R lessons and assignments</h1>
+
+    
+    <span class="article-date">2020-06-16</span>
+    
+
+    <div class="article-content">
+      
+
+<div id="TOC">
+<ul>
+<li><a href="#statistical-models-in-r">Statistical models in <code>R</code></a></li>
+<li><a href="#graphical-procedures-in-r">Graphical procedures in <code>R</code></a></li>
+<li><a href="#r-packages"><code>R</code> packages</a></li>
+<li><a href="#demonstration-in-simulated-data">Demonstration in simulated data</a><ul>
+<li><a href="#linear-regression-single-predictor">Linear regression: single predictor</a></li>
+<li><a href="#linear-regression-multiple-predictors">Linear regression: multiple predictors</a></li>
+<li><a href="#anova">ANOVA</a></li>
+<li><a href="#nonparametric-methods">Nonparametric methods</a></li>
+</ul></li>
+<li><a href="#reproducible-results">Reproducible results</a></li>
+<li><a href="#assignments">Assignments</a></li>
+</ul>
+</div>
+
+<p>Previously, you have learned simple manipulations of vectors and matrices in <code>R</code>, generating data from certain probability distributions, uses of <code>if..else</code> conditionals and looping constructs like <code>for</code> and <code>while</code>, and about constructing and invoking functions in <code>R</code>.</p>
+<p>Here, you shall learn about statistical models and graphical procedures in <code>R</code>, invoking functions from packages in <code>R</code>, and then using them to carry out the statistical procedures described in the slides sent by Prof. Amita Pal.</p>
+<div id="statistical-models-in-r" class="section level1">
+<h1>Statistical models in <code>R</code></h1>
+<p>Let <code>y</code>, <code>x1</code>, <code>x2</code> and <code>f</code> be vectors of the same length, where <code>y</code>, <code>x1</code> and <code>x2</code> are vectors of real numbers and <code>f</code> is a vector of factors. Suppose we want to construct a linear regression model with <code>y</code> as the response and <code>x1</code>, <code>x2</code> as the covariates. Then, we can represent that as a <code>formula</code> in <code>R</code>: <code>lm1 = y ~ x1 + x2</code>. Similarly, if we want to construct a one-way ANOVA model with <code>y</code> being the response and the classes being denoted by the factor vector <code>f</code>, the <code>formula</code> of that statistical model in <code>R</code> would be <code>lm2 = y ~ f</code>. Here, <code>lm1</code> and <code>lm2</code> are <code>R</code> objects of class <code>formula</code>. The <code>R</code> code to get the linear regression fit from these variables is</p>
+<pre class="r"><code>linear_regression = lm(y ~ x1 + x2)</code></pre>
+<p>Similarly, the code for the ANOVA fit is</p>
+<pre class="r"><code>anova = aov(y ~ f)</code></pre>
+<p>Note that the function <code>aov()</code> is only a wrapper to the function <code>lm()</code> for fitting linear models with covariates which are factors, the differences between them being the way the results of the fit are reported. This is due to the fact that the analysis of variance model is also a linear model with a special structure of the covariate. The <code>R</code> objects <code>linear_regression</code> and <code>anova</code> that are created after executing the above code, are of the type <code>list</code>, whose components contain the information on various features of the linear regression or the anova models, e.g., sums of squares, values of slope and intercept, etc.</p>
+<p>For further details on <code>formula</code> in <code>R</code>, see section 11.1 in the book <em>An Introduction to R</em>. Also, type <code>?formula</code> in your <code>R</code> console and press <code>enter</code>, which will open the help page for <code>formula</code> in <code>R</code>. For further details on <code>lm()</code> and <code>aov()</code>, see sections 11.2–11.4 in <em>An Introduction to R</em> and also their help pages: <code>?lm</code> and <code>?aov</code>.</p>
+<p>We shall demonstrate the linear regression and the ANOVA models in <code>R</code> later with examples.</p>
+</div>
+<div id="graphical-procedures-in-r" class="section level1">
+<h1>Graphical procedures in <code>R</code></h1>
+<p>There is a plethora of graphical functions in <code>R</code>. We shall discuss and demonstrate a few of them.</p>
+<p>Perhaps the most ubiquitous of the graphical tools in <code>R</code> is the <code>plot()</code> function. In its most basic form, it works like this:</p>
+<pre class="r"><code>plot(x, y)</code></pre>
+<p>Here, <code>x</code> and <code>y</code> are vectors of same length giving the x and y coordinates of the plot. The <code>plot()</code> function has a lot of optional arguments, using which one can set the type of the plot (points or line) (option: <code>type = 'p'</code> for points, <code>type = 'l'</code> for lines, etc.), the limits of the x axis and the y axis (options: <code>xlim</code> and <code>ylim</code>), labels of the axes (options: <code>xlab</code> and <code>ylab</code>), title of the plot (option: <code>main</code>), etc. One can add legends to a plot using the <code>legend()</code> function. After a plot is drawn, one can add further set of points or lines in it using the <code>points()</code> and <code>line()</code> functions, respectively. The <code>par()</code> function controls a large number of options for the <code>plot()</code> function, including margins of the plot. It is possible to produce several plots in a single pane using the <code>par()</code> function with the <code>mfrow</code> and <code>mfcol</code> options.</p>
+<p>The <code>plot()</code> function can also be used to plot <code>R</code> objects other than numeric vectors. For example, it can be used to plot linear regression fits. For different types of objects, the <code>plot()</code> function behaves differently.</p>
+<p>Check out the documentation pages of the functions <code>plot()</code>, <code>par()</code>, <code>legend()</code>, <code>line()</code> and <code>points()</code>.</p>
+<p>There are also other plot tools in <code>R</code>. For example, to draw histogram, there is the <code>hist()</code> function. Besides, many <code>R</code> packages have their own plotting utilities (packages are being discussed next).</p>
+</div>
+<div id="r-packages" class="section level1">
+<h1><code>R</code> packages</h1>
+<p>An <code>R</code> package is a collection of <code>R</code> functions and datasets. One of the chief advantages of using <code>R</code> is its collection of packages, which runs into thousands. From the repository called <a href="https://cran.r-project.org/">CRAN</a>, the packages can be downloaded and installed. To download and install a package in RStudio, click on the <code>Install</code> button on the <code>Packages</code> tab, and then enter the name of the package in the window that appears. The corresponding <code>R</code> code is <code>install.packages()</code>. After installation, a package needs to be loaded if we want to use the functions contained in it. This can be achieved using the functions <code>library()</code> and <code>require()</code>. Check the help pages of the functions <code>install.packages()</code>, <code>library()</code> and <code>require()</code>.</p>
+</div>
+<div id="demonstration-in-simulated-data" class="section level1">
+<h1>Demonstration in simulated data</h1>
+<p>In this section, we demonstrate the procedures described above.</p>
+<div id="linear-regression-single-predictor" class="section level2">
+<h2>Linear regression: single predictor</h2>
+<p>We first demonstrate linear regression using a simulated dataset with a single predictor. Assume that <code>$ y_i = a_0 + a_1 x_i + e_i $</code>, where <code>$ i = 1, \ldots, 30 $</code>, <code>$ e_i \sim N(0, 1) $</code>, <code>$ x_i \sim N(0, 1) $</code>, and <code>$ x_i $</code> and <code>$ e_i $</code> are independent. We now carry out the regression analysis and describe the <code>R</code> codes required.</p>
+<pre class="r"><code># Assume a_0 = 4, a_1 = 6.
+a_0 = 4
+a_1 = 6
+
+# Data generation
+e = rnorm(30, mean = 0, sd = 1)
+x = rnorm(30, mean = 0, sd = 1)
+y = a_0 + (a_1 * x) + e
+
+# Plot x and y. For a single predictor case, we can
+# construct the scatter plot of x and y. Note the
+# change of color using the &#39;col&#39; option.
+plot(x, y, main = &#39;Scatter plot of x and y&#39;, col = &#39;blue&#39;)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-1-1.png" width="672" /></p>
+<pre class="r"><code># Next we carry out regression analysis
+linear_regression_fit = lm(y ~ x)
+summary(linear_regression_fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ x)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -2.5075 -0.7283 -0.1397  0.5824  2.5811 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   4.0209     0.1961   20.51   &lt;2e-16 ***
+## x             6.1013     0.1916   31.84   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.074 on 28 degrees of freedom
+## Multiple R-squared:  0.9731, Adjusted R-squared:  0.9722 
+## F-statistic:  1014 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code># Extracting the value of the adjusted R-square.
+adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
+
+# Note the difference between &#39;writeLines&#39; vs &#39;print&#39;.
+# For &#39;print&#39;, there are double quotes around the
+# output, unlike in &#39;writeLies&#39;.
+print(paste(&#39;Adjusted R-square is&#39;, adjR2))</code></pre>
+<pre><code>## [1] &quot;Adjusted R-square is 0.972164962966621&quot;</code></pre>
+<pre class="r"><code># Producing the regression diagnostic plots. Note how the
+# subplots are produced using the &#39;mfrow&#39; option. Here,
+# mfrow = c(2,2) reserves space for a 2 x 2 matrix of
+# subplots. Also note here that the plot function produces
+# 4 plots for &#39;lm&#39; objects!
+par(mfrow = c(2,2))
+plot(linear_regression_fit)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-1-2.png" width="672" /></p>
+<pre class="r"><code># Adding the regression line in the scatter plot. We need
+# to first restore the default plot pane by setting
+# mfrow = c(1,1). Notice the &#39;abline&#39; function.
+par(mfrow = c(1,1))
+plot(x, y, main = &#39;Scatter plot of x and y&#39;, col = &#39;blue&#39;)
+abline(linear_regression_fit)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+</div>
+<div id="linear-regression-multiple-predictors" class="section level2">
+<h2>Linear regression: multiple predictors</h2>
+<p>Here, we demonstrate linear regression with multiple predictors. Let <code>$ \sigma_{i j} = 0.5 + 0.5 \mathbb{I}(i = j) $</code> for <code>$ i, j = 1, 2 $</code> and <code>$ \Sigma = (\sigma_{i j})_{2 \times 2} $</code>. Assume that <code>$ y_i = a_0 + a_1 x_{1 i} + a_2 x_{2 i} + e_i $</code>, where <code>$ i = 1, \ldots, 30 $</code>, <code>$ e_i \sim N(0, 1) $</code>, <code>$ (x_{1 i}, x_{2 i}) \sim N_2((0, 0), \Sigma) $</code>, and <code>$ (x_{1 i}, x_{2 i}) $</code> and <code>$ e_i $</code> are independent. We proceed to carry out the regression analysis.</p>
+<pre class="r"><code># Assume a_0 = 1, a_1 = 3 and a_2 = 5.
+a_0 = 1
+a_1 = 3
+a_2 = 5
+
+# Data generation. Note that we use the &#39;MASS&#39; package here
+# for data generation; &#39;mvrnorm&#39; is a function in &#39;MASS&#39;.
+require(MASS)
+X = mvrnorm(30, mu = c(0, 0),
+            Sigma = matrix(c(1, 0.5, 0.5, 1), nrow = 2, ncol = 2))
+e = rnorm(30, mean = 0, sd = 1)
+y = a_0 + (X %*% matrix(c(a_1, a_2), nrow = 2, ncol = 1)) + e
+
+# Since we have three variables of interest here, we can
+# use pairwise scatterplot to graphically present them.
+# For that, we use the &#39;pairs&#39; function.
+pairs(cbind(y, X), main = &#39;Pairwise scatter plot&#39;,
+      col = &#39;violet&#39;)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-2-1.png" width="672" /></p>
+<pre class="r"><code># Next we carry out regression analysis
+linear_regression_fit = lm(y ~ X[,1] + X[,2])
+summary(linear_regression_fit)</code></pre>
+<pre><code>## 
+## Call:
+## lm(formula = y ~ X[, 1] + X[, 2])
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -2.18978 -0.45325 -0.00921  0.55799  1.57113 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)   1.0266     0.1695   6.057 1.82e-06 ***
+## X[, 1]        2.7960     0.1977  14.145 5.28e-14 ***
+## X[, 2]        5.0267     0.2333  21.546  &lt; 2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9104 on 27 degrees of freedom
+## Multiple R-squared:  0.9873, Adjusted R-squared:  0.9864 
+## F-statistic:  1049 on 2 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
+<pre class="r"><code># Extracting the value of the adjusted R-square.
+adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
+
+# Note the difference between &#39;writeLines&#39; vs &#39;print&#39;.
+# For &#39;print&#39;, there are double quotes around the
+# output, unlike in &#39;writeLies&#39;. Also, we use the &#39;round&#39;
+# function for rounding off the decimal digits.
+writeLines(paste(&#39;Adjusted R-square is&#39;, round(adjR2, 2)))</code></pre>
+<pre><code>## Adjusted R-square is 0.99</code></pre>
+<pre class="r"><code># Producing the regression diagnostic plots.
+par(mfrow = c(2,2))
+plot(linear_regression_fit)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-2-2.png" width="672" /></p>
+<pre class="r"><code># Calculation of the variance inflation factor.
+require(car)
+vif(linear_regression_fit)</code></pre>
+<pre><code>##   X[, 1]   X[, 2] 
+## 1.929096 1.929096</code></pre>
+</div>
+<div id="anova" class="section level2">
+<h2>ANOVA</h2>
+<p>Suppose we have a dataset of the form <code>$ y_{i j} = m_i + e_{i j} $</code>, where <code>$ e_{i j} \sim N(0, 1) $</code>, <code>$ i = 1, 2, 3, 4, 5 $</code>, <code>$ j = 1, 2, \ldots, 20 $</code> and <code>$ m_i $</code> is the mean of the <code>$ i $</code>-th class. Below, we simulate such a dataset and carry out statistical analyses on it.</p>
+<pre class="r"><code># Consider m_1 = 0.1, m_2 = 0.5, m_3 = 0.9, m_4 = 1.3
+# and m_5 = 1.7.
+m = c(0.1, 0.5, 0.9, 1.3, 1.7)
+
+Data = list()
+for (i in 1:5){
+  # Generate the data for the i-th class.
+  y = rnorm(20, mean = m[i], sd = 1)
+  
+  # Assign the data for the i-th class as the i-th
+  # component of the list &#39;Data&#39;.
+  Data[[i]] = y
+}
+
+# Join the data vectors for the different classes to form
+# a single vector containing the full dataset, along with
+# the class identifiers as factors.
+Y = cbind(Data[[1]], rep(1, length(Data[[1]])))
+for (i in 2:5){
+  Y = rbind(Y, cbind(Data[[i]], rep(i, length(Data[[i]]))))
+}
+
+# Make the second column of Y, the class identifiers, factors.
+Y = data.frame(Y[,1], as.factor(Y[,2]))
+
+# Plot the second column of Y, a vector of factors, and the
+# first column of Y, which contains the data. Note that the
+# plot() command here produces the boxplots of the classes!
+plot(Y[,2], Y[,1])</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<pre class="r"><code># Now plot the class identifiers, which is a vector of factors.
+# Note that it produces a barplot corresponding to the classes!
+plot(Y[,2])</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-3-2.png" width="672" /></p>
+<pre class="r"><code># There is also separate command for boxplot. The following
+# produces the boxplot corresponding to the second class.
+boxplot(Y[,1][21:40])</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-3-3.png" width="672" /></p>
+<pre class="r"><code># Now we carry out an ANOVA study.
+anovafit = aov(Y[,1] ~ Y[,2])
+summary(anovafit)</code></pre>
+<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+## Y[, 2]       4   47.2  11.800   10.31 5.58e-07 ***
+## Residuals   95  108.7   1.144                     
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
+<pre class="r"><code># How do we extract the p-value? We can do it this way:
+pvalue = summary(anovafit)[[1]][[&#39;Pr(&gt;F)&#39;]][[1]]
+
+# Note the writeLines() function.
+if (pvalue &lt; 0.05)
+  writeLines(&#39;ANOVA p-value is less than 5%.&#39;)</code></pre>
+<pre><code>## ANOVA p-value is less than 5%.</code></pre>
+</div>
+<div id="nonparametric-methods" class="section level2">
+<h2>Nonparametric methods</h2>
+<p>Next, we demonstrate some nonparametric tests in simulated datasets. We consider two samples: <code>$ y_{i j} = m_i + e_{i j} $</code>, where <code>$ e_{i j} \sim N(0, 1) $</code>, <code>$ i = 1, 2 $</code>, <code>$ j = 1, 2, \ldots, 20 $</code> and <code>$ m_i $</code> is the mean of the <code>$ i $</code>-th class. We carry out the Kolmogorov-Smirnov tests in this model.</p>
+<pre class="r"><code># Assume m_1 = 0, m_2 = 1.
+y1 = rnorm(20, 0, 1)
+y2 = rnorm(20, 1, 1)
+
+# Kolmogorov-Smirnov one-sample test; here it checks for
+# normality with mean 0 and standard deviation 1.
+k1 = ks.test(y1, &#39;pnorm&#39;, alternative = &#39;two.sided&#39;)
+writeLines(paste(&#39;p-value for y1 is:&#39;, k1$p.value))</code></pre>
+<pre><code>## p-value for y1 is: 0.925646165871785</code></pre>
+<pre class="r"><code>k2 = ks.test(y2, &#39;pnorm&#39;, alternative = &#39;two.sided&#39;)
+writeLines(paste(&#39;p-value for y2 is:&#39;, k2$p.value))</code></pre>
+<pre><code>## p-value for y2 is: 0.00641756097612145</code></pre>
+<pre class="r"><code># Kolmogorov-Smirnov test of normality with mean and standard
+# deviation estimated from the data.
+k2a = ks.test(y2, &#39;pnorm&#39;, mean(y2), sd(y2),
+              alternative = &#39;two.sided&#39;)
+writeLines(paste(&#39;p-value for y2 now is:&#39;, k2a$p.value))</code></pre>
+<pre><code>## p-value for y2 now is: 0.715547207465254</code></pre>
+<pre class="r"><code># Kolmogorov-Smirnov two-sample test; here it checks whether
+# y1 and y2 comes from the same distribution
+k3 = ks.test(y1, y2, alternative = &#39;two.sided&#39;)
+writeLines(paste(&#39;p-value for the two-sided test:&#39;, k3$p.value))</code></pre>
+<pre><code>## p-value for the two-sided test: 0.174533005698069</code></pre>
+<pre class="r"><code># Q-Q plot yields a good visual indication whether the two
+# samples are from the same distribution.
+# We first compute the quantiles.
+q1 = quantile(y1, probs = seq(0, 1, 0.05), names = FALSE)
+q2 = quantile(y2, probs = seq(0, 1, 0.05), names = FALSE)
+# Now we now plot them.
+plot(q1, q2, col = &#39;blue&#39;, main = &#39;Q-Q plot&#39;)
+# We add the line y = x
+lines(q1, q1)</code></pre>
+<p><img src="/post/2020-06-16-r-lessons-and-assignments_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+Next we consider the chi squared test for goodness of fit. For this, we assume that <code>$ P(y_i = k) = p_k $</code>, where <code>$ p_1, \ldots, p_K $</code> are positive probabilities with <code>$ \sum_{k=1}^K p_k = 1 $</code>, and <code>$ i = 1, \ldots, 100 $</code>. We take <code>$ K = 5 $</code>. Since the chi squared test is an asymptotic test, we consider a somewhat large sample size.</p>
+<pre class="r"><code># Assume p_1 = p_2 = 0.1, p_3 = p_4 = 0.25, p_5 = 0.3.
+probabilities = c(0.1, 0.1, 0.25, 0.25, 0.3)
+require(extraDistr)</code></pre>
+<pre><code>## Loading required package: extraDistr</code></pre>
+<pre class="r"><code># &#39;rcat&#39; is a function in the packahe &#39;extraDistr&#39;.
+y = rcat(100, probabilities)
+
+# Conducting the test.
+pvalue1 = chisq.test(as.vector(table(y)), p = probabilities)$p.value
+writeLines(paste(&#39;p value of chi squared test:&#39;, pvalue1))</code></pre>
+<pre><code>## p value of chi squared test: 0.895328499862924</code></pre>
+<pre class="r"><code>pvalue2 = chisq.test(as.vector(table(y)), p = rep(0.2, 5))$p.value
+writeLines(paste(&#39;p value of chi squared test:&#39;, pvalue2))</code></pre>
+<pre><code>## p value of chi squared test: 0.010338797085364</code></pre>
+<p>Next, we consider the one-sample and two sample sign tests. We consider the same models as considered for Kolmogorov-Smirnov tests.</p>
+<pre class="r"><code># Assume m_1 = 0, m_2 = 1.
+y1 = rnorm(20, 0, 1)
+y2 = rnorm(20, 1, 1)
+
+# One-sample sign test; null hypothesis is that
+# the median is &#39;md&#39;.
+require(BSDA)
+p1 = SIGN.test(y1, md = 0)$p.value
+writeLines(paste(&#39;p1 =&#39;, p1))</code></pre>
+<pre><code>## p1 = 0.115318298339844</code></pre>
+<pre class="r"><code>p2 = SIGN.test(y2, md = 0)$p.value
+writeLines(paste(&#39;p2 =&#39;, p2))</code></pre>
+<pre><code>## p2 = 1.90734863303454e-06</code></pre>
+<pre class="r"><code># Two-sample sign test; null hypothesis is that
+# the median of the population of differences is &#39;md&#39;.
+p3 = SIGN.test(y1, y2, md = 0)$p.value
+writeLines(paste(&#39;p3 =&#39;, p3))</code></pre>
+<pre><code>## p3 = 0.000402450561523438</code></pre>
+</div>
+</div>
+<div id="reproducible-results" class="section level1">
+<h1>Reproducible results</h1>
+<p>When we perform any operation involving random numbers, the results are different for each run of the experiment. This is because the random numbers are different for each draw. The phenomenon makes the experimental results non-reproducible. However, since the random numbers are actually pseudo-random numbers, this problem can be mitigated by fixing the <code>seed</code> of the random number generation process in the following way:</p>
+<pre class="r"><code># You can put any fixed number as the &#39;seed&#39;.
+s = 123
+set.seed(seed = s)</code></pre>
+<p>After fixing the <code>seed</code>, the generated random number sequences become identical, and therefore the outputs of the statistical investigation also become identical.</p>
+</div>
+<div id="assignments" class="section level1">
+<h1>Assignments</h1>
+<ol style="list-style-type: decimal">
+<li>In the begining of your assignments, set your roll number to be the <code>seed</code>. Check whether all the subsequent outputs of your statistical analyses are the same or not. [1]</li>
+<li><em>Nonparametric methods 1:</em> Generate a random vector <code>y1</code> of length 50 from the chi squared distribution with 10 degrees of freedom. Generate another vector <code>y2</code> of length 40 from the Gamma distribution with shape parameter 5 and scale parameter 2.
+<ul>
+<li>Produce a Q-Q plot of <code>y1</code> and <code>y2</code>. [1]</li>
+<li>Perform a one-sample Kolmogorov-Smirnov test on <code>y1</code> with the distribution being a Gamma distribution with shape parameter 5 and scale parameter 2. Report what you have found. Now perform a one-sample Kolmogorov-Smirnov test on <code>y2</code> with the distribution being a chi squared distribution with 10 degrees of freedom. Report what you have found. [1]</li>
+<li>Perform a two-sample Kolmogorov-Smirnov test on <code>y1</code> and <code>y2</code>. [1]</li>
+</ul></li>
+<li><em>Nonparametric methods 2:</em> For <code>m</code> taking values in <code>seq(-1, 1, 0.25)</code>, generate random vectors of length 20 from the normal distribution with <code>mean = m</code> and standard deviation 1. For each of the cases, perform a sign test on the data with the assumption that the median = 0, using a <code>for</code> loop. Report the vector of p values. [1]</li>
+<li><em>Nonparametric methods 3:</em> Generate a random vector <code>x</code> of length 200 from the standard normal distribution. You can plot the histogram of a vector using the <code>hist()</code> command. Look up the documentation on the <code>hist()</code> command, and draw a histogram with 10 bins from <code>x</code>. Calculate the probabilities in those 10 bins under the standard normal distribution. Based on those probabilities, carry out a chi squared goodness of fit test. [5]</li>
+<li><em>Regression methods:</em> Many <code>R</code> packages contain datasets. Get the <code>Boston</code> dataset from the package <code>MASS</code>.
+<ul>
+<li>Build a linear model from the <code>Boston</code> dataset taking the variable <code>medv</code> as the response and everything else as predictors. (Hint: the symbol <code>.</code> can be used to denote all other variables except the response in an <code>R</code> formula; look up section 11.5 in <em>An Introduction to R</em>.) [1]</li>
+<li>Draw the pairwise scatterplots of all the variables in the <code>Boston</code> dataset. [1]</li>
+<li>Calculate the variance inflation factor for all the predictors in the linear model you have built. Do you see presence of multicollinearity? [2]</li>
+<li>If yes, drop the problematic predictor from the class of all predictors, rebuild the model, and again compute the variance inflation factors. (Hint: <code>y ~ . -x</code> means all variables in the specified dataset minus <code>x</code>is the predictor of <code>y</code>.) [2]</li>
+<li>Do you see anymore evidence of multicollinearity? If not, display the estimated coefficients, their standard errors, <code>t</code> statistics values and corresponding p values. [2]</li>
+<li>Compute the confidence intervals of the coefficients. (Hint: use the function <code>confint()</code>). [1]</li>
+<li>Predict the response at the mean of all the covariates. (Hint: use the function <code>predict()</code>). [1]</li>
+</ul></li>
+<li><em>ANOVA:</em> Find the <code>InsectSprays</code> dataset included with your <code>R</code> installation. Build an ANOVA model taking the <code>count</code> variable as the response and the <code>spray</code> variable as the covariate.
+<ul>
+<li>Build boxplots corresponding to the factor levels in this ANOVA model. [1]</li>
+<li>Display the sum of squares, F statistic value and its p value for this ANOVA model. [1]</li>
+<li>Plot the normal Q-Q plot for the standadized residuals for this ANOVA model. (Hint: lookup <code>plot.lm</code>; and note that <code>aov</code> is essentially same as <code>lm</code> except its wrapper.) [2]</li>
+<li>Now, build another ANOVA model taking the square root of <code>count</code> as the response and <code>spray</code> as the covariate. Plot the same normal Q-Q plot for this ANOVA model also. What do you notice? [1]</li>
+</ul></li>
+</ol>
+</div>
+
+    </div>
+  </article>
+
+  
+
+
+</main>
+
+      <footer class="footer">
+        <ul class="footer-links">
+          <li>
+            <a href="/index.xml" type="application/rss+xml" target="_blank">RSS feed</a>
+          </li>
+          <li>
+            <a href="https://gohugo.io/" class="footer-links-kudos">Made with <img src="/images/hugo-logo.png" alt="Img link to Hugo website" width="22" height="22"></a>
+          </li>
+        </ul>
+      </footer>
+
+    </div>
+    
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+
+
+
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/r.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+<script>hljs.configure({languages: []}); hljs.initHighlightingOnLoad();</script>
+
+
+
+    
+<script src="/js/math-code.js"></script>
+<script async src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+
+
+    
+  </body>
+</html>
+

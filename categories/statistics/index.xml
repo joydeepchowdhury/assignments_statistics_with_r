@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Statistics on Assignments for Statistics with R</title>
+    <link>/categories/statistics/</link>
+    <description>Recent content in Statistics on Assignments for Statistics with R</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 16 Jun 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="/categories/statistics/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>R lessons and assignments</title>
+      <link>/2020/06/16/r-lessons-and-assignments/</link>
+      <pubDate>Tue, 16 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/2020/06/16/r-lessons-and-assignments/</guid>
+      <description>Statistical models in RGraphical procedures in RR packagesDemonstration in simulated dataLinear regression: single predictorLinear regression: multiple predictorsANOVANonparametric methodsReproducible resultsAssignmentsPreviously, you have learned simple manipulations of vectors and matrices in R, generating data from certain probability distributions, uses of if..else conditionals and looping constructs like for and while, and about constructing and invoking functions in R.</description>
+    </item>
+    
+  </channel>
+</rss>
