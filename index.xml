@@ -12,21 +12,21 @@
     
     
     <item>
+      <title>About</title>
+      <link>/about/</link>
+      <pubDate>Tue, 16 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>/about/</guid>
+      <description>This site contains some R lessons and the assignments for the course Statistics with R conducted in The Indian Association for the Cultivation of Science on 2020.</description>
+    </item>
+    
+    <item>
       <title>R lessons and assignments</title>
       <link>/2020/06/16/r-lessons-and-assignments/</link>
       <pubDate>Tue, 16 Jun 2020 00:00:00 +0000</pubDate>
       
       <guid>/2020/06/16/r-lessons-and-assignments/</guid>
       <description>Statistical models in RGraphical procedures in RR packagesDemonstration in simulated dataLinear regression: single predictorLinear regression: multiple predictorsANOVANonparametric methodsReproducible resultsAssignmentsPreviously, you have learned simple manipulations of vectors and matrices in R, generating data from certain probability distributions, uses of if..else conditionals and looping constructs like for and while, and about constructing and invoking functions in R.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>/about/</link>
-      <pubDate>Thu, 05 May 2016 21:48:51 -0700</pubDate>
-      
-      <guid>/about/</guid>
-      <description>This site contains some R lessons and the assignments for the course Statistics with R conducted in The Indian Association for the Cultivation of Science on 2020.</description>
     </item>
     
   </channel>

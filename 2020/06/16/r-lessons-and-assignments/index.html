@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="generator" content="Hugo 0.72.0" />
+<meta name="generator" content="Hugo 0.74.3" />
 
 
 <title>R lessons and assignments - Assignments for Statistics with R</title>
@@ -139,18 +139,18 @@ summary(linear_regression_fit)</code></pre>
 ## 
 ## Residuals:
 ##     Min      1Q  Median      3Q     Max 
-## -2.5075 -0.7283 -0.1397  0.5824  2.5811 
+## -2.2572 -0.6888  0.2136  0.7901  1.8440 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   4.0209     0.1961   20.51   &lt;2e-16 ***
-## x             6.1013     0.1916   31.84   &lt;2e-16 ***
+## (Intercept)   4.0496     0.2135   18.97   &lt;2e-16 ***
+## x             6.1563     0.2497   24.66   &lt;2e-16 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 1.074 on 28 degrees of freedom
-## Multiple R-squared:  0.9731, Adjusted R-squared:  0.9722 
-## F-statistic:  1014 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 1.166 on 28 degrees of freedom
+## Multiple R-squared:  0.956,  Adjusted R-squared:  0.9544 
+## F-statistic:   608 on 1 and 28 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre class="r"><code># Extracting the value of the adjusted R-square.
 adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
 
@@ -158,7 +158,7 @@ adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
 # For &#39;print&#39;, there are double quotes around the
 # output, unlike in &#39;writeLies&#39;.
 print(paste(&#39;Adjusted R-square is&#39;, adjR2))</code></pre>
-<pre><code>## [1] &quot;Adjusted R-square is 0.972164962966621&quot;</code></pre>
+<pre><code>## [1] &quot;Adjusted R-square is 0.954400879894875&quot;</code></pre>
 <pre class="r"><code># Producing the regression diagnostic plots. Note how the
 # subplots are produced using the &#39;mfrow&#39; option. Here,
 # mfrow = c(2,2) reserves space for a 2 x 2 matrix of
@@ -206,19 +206,19 @@ summary(linear_regression_fit)</code></pre>
 ## 
 ## Residuals:
 ##      Min       1Q   Median       3Q      Max 
-## -2.18978 -0.45325 -0.00921  0.55799  1.57113 
+## -2.37622 -0.85513 -0.04516  0.83614  2.76180 
 ## 
 ## Coefficients:
 ##             Estimate Std. Error t value Pr(&gt;|t|)    
-## (Intercept)   1.0266     0.1695   6.057 1.82e-06 ***
-## X[, 1]        2.7960     0.1977  14.145 5.28e-14 ***
-## X[, 2]        5.0267     0.2333  21.546  &lt; 2e-16 ***
+## (Intercept)   0.9519     0.2262   4.208 0.000255 ***
+## X[, 1]        3.0793     0.3439   8.954 1.44e-09 ***
+## X[, 2]        5.2068     0.3568  14.592 2.51e-14 ***
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
 ## 
-## Residual standard error: 0.9104 on 27 degrees of freedom
-## Multiple R-squared:  0.9873, Adjusted R-squared:  0.9864 
-## F-statistic:  1049 on 2 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
+## Residual standard error: 1.212 on 27 degrees of freedom
+## Multiple R-squared:  0.9727, Adjusted R-squared:  0.9706 
+## F-statistic: 480.3 on 2 and 27 DF,  p-value: &lt; 2.2e-16</code></pre>
 <pre class="r"><code># Extracting the value of the adjusted R-square.
 adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
 
@@ -227,7 +227,7 @@ adjR2 = summary(linear_regression_fit)[[&#39;adj.r.squared&#39;]]
 # output, unlike in &#39;writeLies&#39;. Also, we use the &#39;round&#39;
 # function for rounding off the decimal digits.
 writeLines(paste(&#39;Adjusted R-square is&#39;, round(adjR2, 2)))</code></pre>
-<pre><code>## Adjusted R-square is 0.99</code></pre>
+<pre><code>## Adjusted R-square is 0.97</code></pre>
 <pre class="r"><code># Producing the regression diagnostic plots.
 par(mfrow = c(2,2))
 plot(linear_regression_fit)</code></pre>
@@ -236,7 +236,7 @@ plot(linear_regression_fit)</code></pre>
 require(car)
 vif(linear_regression_fit)</code></pre>
 <pre><code>##   X[, 1]   X[, 2] 
-## 1.929096 1.929096</code></pre>
+## 2.008721 2.008721</code></pre>
 </div>
 <div id="anova" class="section level2">
 <h2>ANOVA</h2>
@@ -282,9 +282,9 @@ boxplot(Y[,1][21:40])</code></pre>
 <pre class="r"><code># Now we carry out an ANOVA study.
 anovafit = aov(Y[,1] ~ Y[,2])
 summary(anovafit)</code></pre>
-<pre><code>##             Df Sum Sq Mean Sq F value   Pr(&gt;F)    
-## Y[, 2]       4   47.2  11.800   10.31 5.58e-07 ***
-## Residuals   95  108.7   1.144                     
+<pre><code>##             Df Sum Sq Mean Sq F value Pr(&gt;F)   
+## Y[, 2]       4  26.71   6.678   4.727 0.0016 **
+## Residuals   95 134.22   1.413                  
 ## ---
 ## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1</code></pre>
 <pre class="r"><code># How do we extract the p-value? We can do it this way:
@@ -306,21 +306,21 @@ y2 = rnorm(20, 1, 1)
 # normality with mean 0 and standard deviation 1.
 k1 = ks.test(y1, &#39;pnorm&#39;, alternative = &#39;two.sided&#39;)
 writeLines(paste(&#39;p-value for y1 is:&#39;, k1$p.value))</code></pre>
-<pre><code>## p-value for y1 is: 0.925646165871785</code></pre>
+<pre><code>## p-value for y1 is: 0.184046986270697</code></pre>
 <pre class="r"><code>k2 = ks.test(y2, &#39;pnorm&#39;, alternative = &#39;two.sided&#39;)
 writeLines(paste(&#39;p-value for y2 is:&#39;, k2$p.value))</code></pre>
-<pre><code>## p-value for y2 is: 0.00641756097612145</code></pre>
+<pre><code>## p-value for y2 is: 0.00123458009965349</code></pre>
 <pre class="r"><code># Kolmogorov-Smirnov test of normality with mean and standard
 # deviation estimated from the data.
 k2a = ks.test(y2, &#39;pnorm&#39;, mean(y2), sd(y2),
               alternative = &#39;two.sided&#39;)
 writeLines(paste(&#39;p-value for y2 now is:&#39;, k2a$p.value))</code></pre>
-<pre><code>## p-value for y2 now is: 0.715547207465254</code></pre>
+<pre><code>## p-value for y2 now is: 0.741052261475311</code></pre>
 <pre class="r"><code># Kolmogorov-Smirnov two-sample test; here it checks whether
 # y1 and y2 comes from the same distribution
 k3 = ks.test(y1, y2, alternative = &#39;two.sided&#39;)
 writeLines(paste(&#39;p-value for the two-sided test:&#39;, k3$p.value))</code></pre>
-<pre><code>## p-value for the two-sided test: 0.174533005698069</code></pre>
+<pre><code>## p-value for the two-sided test: 0.0335416594061468</code></pre>
 <pre class="r"><code># Q-Q plot yields a good visual indication whether the two
 # samples are from the same distribution.
 # We first compute the quantiles.
@@ -342,10 +342,10 @@ y = rcat(100, probabilities)
 # Conducting the test.
 pvalue1 = chisq.test(as.vector(table(y)), p = probabilities)$p.value
 writeLines(paste(&#39;p value of chi squared test:&#39;, pvalue1))</code></pre>
-<pre><code>## p value of chi squared test: 0.895328499862924</code></pre>
+<pre><code>## p value of chi squared test: 0.00550918959728614</code></pre>
 <pre class="r"><code>pvalue2 = chisq.test(as.vector(table(y)), p = rep(0.2, 5))$p.value
 writeLines(paste(&#39;p value of chi squared test:&#39;, pvalue2))</code></pre>
-<pre><code>## p value of chi squared test: 0.010338797085364</code></pre>
+<pre><code>## p value of chi squared test: 3.66669020397196e-07</code></pre>
 <p>Next, we consider the one-sample and two sample sign tests. We consider the same models as considered for Kolmogorov-Smirnov tests.</p>
 <pre class="r"><code># Assume m_1 = 0, m_2 = 1.
 y1 = rnorm(20, 0, 1)
@@ -356,15 +356,15 @@ y2 = rnorm(20, 1, 1)
 require(BSDA)
 p1 = SIGN.test(y1, md = 0)$p.value
 writeLines(paste(&#39;p1 =&#39;, p1))</code></pre>
-<pre><code>## p1 = 0.115318298339844</code></pre>
+<pre><code>## p1 = 0.263175964355469</code></pre>
 <pre class="r"><code>p2 = SIGN.test(y2, md = 0)$p.value
 writeLines(paste(&#39;p2 =&#39;, p2))</code></pre>
-<pre><code>## p2 = 1.90734863303454e-06</code></pre>
+<pre><code>## p2 = 0.00040245056152366</code></pre>
 <pre class="r"><code># Two-sample sign test; null hypothesis is that
 # the median of the population of differences is &#39;md&#39;.
 p3 = SIGN.test(y1, y2, md = 0)$p.value
 writeLines(paste(&#39;p3 =&#39;, p3))</code></pre>
-<pre><code>## p3 = 0.000402450561523438</code></pre>
+<pre><code>## p3 = 4.00543212890625e-05</code></pre>
 </div>
 </div>
 <div id="reproducible-results" class="section level1">
